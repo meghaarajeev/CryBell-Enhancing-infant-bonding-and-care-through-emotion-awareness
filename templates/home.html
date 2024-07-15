@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Upload Your Baby Cry</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" croddo
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+</head>
+<body class="bg-image">
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <h1 class="website-title">EmoSense.</h1>
+    <div class="container">
+        <h1> </h1>
+        <h3>Welcome, {{ user.username }}!</h3>
+        <h1>Upload Your Baby Cry</h1>
+        <p>Record or upload an audio file of a baby cry to analyze its emotion:</p>
+        <button onclick="startRecording()">Start Recording</button>
+        <button onclick="stopRecording()">Stop Recording</button>
+        <p>Play recorded audio :</p>
+        <br><br>
+        <audio id="audioPlayer" controls></audio>
+        <br>
+        <p>Choose a file from your device:</p>
+        <form id="uploadForm" enctype="multipart/form-data" action="{% url 'upload_audio' %}" method="post">
+            {% csrf_token %}
+            <input type="file" name="audio" id="fileInput" accept="audio/*">
+            <br>
+            <button id="front" type="button" onclick="uploadAudio()">Upload</button>
+        </form>
+        <h2> View results here: </h2>
+        <br>
+        <p class="label" id="predictedLabel"> - </p>
+        <h1> </h1>
+        <h1> </h1>
+        <br>
+        <div class="help-text" align="center">
+            <span><a href="home.html">Analyze a different audio</a></span>
+        </div> 
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let mediaRecorder;
+        let chunks = [];
+
+        async function startRecording() {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+
+            mediaRecorder.ondataavailable = function(event) {
+                chunks.push(event.data);
+            }
+
+            mediaRecorder.onstop = function() {
+                const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                document.getElementById('audioPlayer').src = audioUrl;
+                const fileInput = document.getElementById('fileInput');
+                const file = new File([audioBlob], "recorded_audio.wav", { type: "audio/wav" });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+            }
+
+            chunks = [];
+            mediaRecorder.start();
+        }
+
+        function stopRecording() {
+            mediaRecorder.stop();
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function uploadAudio() {
+            const fileInput = document.getElementById('fileInput');
+            const selectedFile = fileInput.files[0];
+
+            const formData = new FormData();
+                formData.append('audio', selectedFile);
+
+                for (let pair of formData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]);
+                }
+
+                axios.post('{% url "upload_audio" %}', formData, {
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(response => {
+                    console.log("response.status",response.status);
+                    if (response.status === 200) {
+                        console.log("response",response);
+                        console.log("response.data",response.data);
+                        console.log('Upload complete');
+                        // window.location.href = '/result?prediction_label=' + response.data.prediction_label;
+                        // window.location.href = '/upload_audio?predicted_label=' + response.data.predicted_label;
+                        document.getElementById('predictedLabel').innerText = response.data.predicted_label;
+                    } else {
+                        console.error('Upload failed:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function logout() {
+            console.log("Logout clicked");
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

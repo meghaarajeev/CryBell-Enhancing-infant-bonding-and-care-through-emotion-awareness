@@ -1,0 +1,122 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Nanum Myeongjo", serif;
+}
+
+h3{
+    color: white;
+}
+
+.nanum-myeongjo-regular {
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.bg-image {
+    background-image: url("./assets/login.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+}
+
+.website-title {
+    margin: 0;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 25px;
+    color: white;
+    z-index: 2;
+}
+
+.container {
+    width: 100%;
+    max-width: 450px;
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 40px;
+    background-color: rgba(77, 80, 56, 0.7);
+    color: white;
+    box-sizing: border-box;
+    border-radius: 10px;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    margin-bottom: 20px;
+}
+
+.container button {
+    background: #858666;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 16px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#predictedLabel {
+    font-size: 20px;
+    margin-top: 10px; /* Add some space above the label */
+    text-align: center; /* Center the text within the label */
+}
+
+
+.logout-btn {
+    border-radius: 10px;
+    position: fixed; /* Change position to fixed */
+    top: 20px;
+    right: 20px;
+    background: #858666; /* Change background color */
+    color: rgb(10, 12, 10);
+    font-weight: bold;
+    border: black;
+    cursor: pointer;
+    padding: 10px 20px; /* Add padding to make button larger */
+    z-index: 2; /* Ensure logout button is above other content */
+}
+
+
+.container button:hover {
+    background-color: #477834; /* Change button background color on hover */
+}
+
+.logout-btn:hover {
+    background-color: #477834
+}
+
+#front {
+    margin-bottom: 10px;
+    align-self: flex-start;
+    padding-left: 30px;
+  }
+
+.help-text {
+    color: #D2CBC1;
+    font-size: 13px;
+    margin-top: 24px;
+}
+.help-text a {
+    color: #D2CBC1;
+    text-decoration: none;
+}
+
+.help-text a:hover {
+    text-decoration: underline;
+}

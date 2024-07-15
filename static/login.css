@@ -1,0 +1,105 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Nanum Myeongjo", serif;
+}
+
+.nanum-myeongjo-regular {
+    font-family: "Nanum Myeongjo", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.website-title {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 25px;
+    color: white;
+    z-index: 2;
+}
+
+.bg-image {
+    background-image: url("./assets/login.jpg/");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    height: 100%;
+    z-index: 1;
+}
+
+/* .bg-image::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #222217;
+    z-index: -1;
+} */
+
+.signup-container {
+    width: 100%;
+    max-width: 450px;
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px 40px 20px 40px;
+    background-color: rgba(77, 80, 56, 0.7);
+    color:white ;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.signup-container h1 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.signup-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-container input {
+    background: #FBF7F2;
+    border: 0;
+    color: #222217;
+    height: 30px;
+    line-height: 50px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.signup-container .signup-btn {
+    background: #858666;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    padding: 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-container .signup-btn:hover {
+    background: #222217;
+}
+
+.signup-container .help-text {
+    color: #D2CBC1;
+    font-size: 13px;
+    margin-top: 24px;
+}
+
+.signup-container .help-text a {
+    color: #D2CBC1;
+    text-decoration: none;
+}
+
+.signup-container .help-text a:hover {
+    text-decoration: underline;
+}
